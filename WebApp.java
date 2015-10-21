@@ -591,6 +591,7 @@ public class WebApp {
 									keyCount++;
 								}
 							} else if(cellActionString.equalsIgnoreCase("sleep")) {
+								System.out.println("waiting for 10 sec");
 								Thread.sleep(10000);
 							} else if(cellActionString.equalsIgnoreCase("rightclick")) {
 								Actions actions = new Actions(driver);
