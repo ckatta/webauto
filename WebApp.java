@@ -32,7 +32,6 @@ import org.apache.commons.io.FileUtils;
 import org.apache.james.mime4j.field.datetime.DateTime;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Row;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.JavascriptExecutor;
@@ -503,6 +502,20 @@ public class WebApp {
 								}
 								
 
+							} else if(cellActionString.equalsIgnoreCase("exist")){
+								
+								JavascriptExecutor jse = (JavascriptExecutor) driver;
+								
+								String xpathExecuteString = "var elementStatus = document.evaluate( '"+xpathString+"', document, null, XPathResult.ANY_TYPE, null );"
+										+ "return elementStatus;";
+								
+								boolean eleStatus = Boolean.valueOf((String) jse.executeScript(xpathExecuteString));
+								if(eleStatus) {
+									System.out.println("passed");
+								} else {
+									System.out.println("expected string not present in mail");
+								}
+								
 							} else if (cellActionString.equalsIgnoreCase("get")) {
 //								System.out.println("Text::"+webElement.getText());
 								System.out.println(elementIdentifier+"---"+webElement.getText());
