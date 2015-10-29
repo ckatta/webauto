@@ -456,6 +456,20 @@ public class WebApp {
 											break;
 										}
 									}
+								}  else if(cellActionString.equalsIgnoreCase("exist")){
+									
+									JavascriptExecutor jse = (JavascriptExecutor) driver;
+									
+									String xpathExecuteString = "var elementStatus = document.evaluate( '"+xpathString+"', document, null, XPathResult.ANY_TYPE, null );"
+											+ "return elementStatus;";
+									
+									boolean eleStatus = Boolean.valueOf((String) jse.executeScript(xpathExecuteString));
+									if(eleStatus) {
+										System.out.println("passed");
+									} else {
+										System.out.println("expected string not present in mail");
+									}
+									
 								} else if(cellActionString.equalsIgnoreCase("evaluate")) {
 									JavascriptExecutor jse = (JavascriptExecutor) driver;
 									jse.executeScript(xpathString);
@@ -469,6 +483,27 @@ public class WebApp {
 //									String expressionValue = String.valueOf(xPath.evaluate(xpathString, driver.getPageSource()));
 //									System.out.println(expressionValue);
 //									hashMap.put(elementIdentifier, expressionValue);
+								} else if(cellActionString.equalsIgnoreCase("isDisplayed")){
+									webElement = driver.findElement(By.xpath(xpathString));
+									if(webElement.isDisplayed()){
+										System.out.println("passed");
+									} else {
+										System.out.println("not displayed");
+									}
+								} else if(cellActionString.equalsIgnoreCase("isPresent")) {
+									int eleCount = driver.findElements(By.xpath(xpathString)).size();
+									if(eleCount > 0) {
+										System.out.println("passed");
+									} else {
+										System.out.println("failed");
+									}
+								} else if(cellActionString.equalsIgnoreCase("isEnabled")) {
+									webElement = driver.findElement(By.xpath(xpathString));
+									if(webElement.isEnabled()){
+										System.out.println("element is enabled");
+									} else {
+										System.out.println("element is not enabled");
+									}
 								} else {
 									webElement = returnWebElement(xpathString, "120");
 								}
@@ -502,20 +537,6 @@ public class WebApp {
 								}
 								
 
-							} else if(cellActionString.equalsIgnoreCase("exist")){
-								
-								JavascriptExecutor jse = (JavascriptExecutor) driver;
-								
-								String xpathExecuteString = "var elementStatus = document.evaluate( '"+xpathString+"', document, null, XPathResult.ANY_TYPE, null );"
-										+ "return elementStatus;";
-								
-								boolean eleStatus = Boolean.valueOf((String) jse.executeScript(xpathExecuteString));
-								if(eleStatus) {
-									System.out.println("passed");
-								} else {
-									System.out.println("expected string not present in mail");
-								}
-								
 							} else if (cellActionString.equalsIgnoreCase("get")) {
 //								System.out.println("Text::"+webElement.getText());
 								System.out.println(elementIdentifier+"---"+webElement.getText());
